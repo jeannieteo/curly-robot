@@ -67,7 +67,7 @@ Enable and trigger pyspark_etl_dag in Airflow UI.
 #### Airflow DAG Overview
 <br>Task 1: Run PySpark ETL (spark-submit inside container).
 The partition files are set to be placed in s3 buckets in processed/fashion_store folder:
-![s3buckets](./images/awsS3Buckets_output.png "output")
+![s3buckets](./images/awsS3BucketsOutput.png "output")
 <br>Task 2: Validate output using validate.py.
 
 
