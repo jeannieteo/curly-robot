@@ -28,12 +28,12 @@ project-root/
 
 ### Setup Instructions
 - 1. Clone the Repository
-git clone https://github.com/your-username/pyspark-airflow-etl.git
-cd pyspark-airflow-etl
+git clone [https://github.com/jeannieteo/curly-robot](https://github.com/jeannieteo/curly-robot)
+cd curly-robot
 
 - 2. Place Your Data
 Download the Kaggle dataset and put CSV files in data/ or upload to S3.
-AWS S3 buckets contains the csv files:
+AWS S3 buckets contains the csv files: (You have to create your own s3 in AWS.)
 ![S3Buckets](./images/awsS3BucketsCSV.png "S3")
 
 - 3. Build Your Custom Image: files: Dockerfile, docker-compose.yml
@@ -66,6 +66,8 @@ Enable and trigger pyspark_etl_dag in Airflow UI.
 
 #### Airflow DAG Overview
 <br>Task 1: Run PySpark ETL (spark-submit inside container).
+The partition files are set to be placed in s3 buckets in processed/fashion_store folder:
+![s3buckets](./images/awsS3Buckets_output.png "output")
 <br>Task 2: Validate output using validate.py.
 
 
@@ -85,6 +87,6 @@ Enable and trigger pyspark_etl_dag in Airflow UI.
 
 -----------------------------------------
 
-Local execution on windows always breaks
+Local execution on windows always breaks on the wintils parts so I used docker
 
 spark-submit  --master local[*] --packages org.apache.hadoop:hadoop-aws:3.4.1   --conf spark.hadoop.fs.s3a.access.key=<AWS_KEY_ID> --conf spark.hadoop.fs.s3a.secret.key=<AWS_SECRET_KEY> --conf spark.hadoop.fs.s3a.endpoint=s3.amazonaws.com   pyspark_etl.py
