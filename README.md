@@ -49,12 +49,14 @@ Generate a Fernet Key: Airflow requires a Fernet key for encrypting sensitive da
 - 4. Initialize the Database: Run the following command to initialize the Airflow database:
 
 `docker-compose run airflow airflow db init`
+<br>
 ![docker run](./images/dockerRun.png "docker Run")
 - 5. Start Services
 `docker-compose up -d`
 
 - 6. Add admin user for login into Airflow UI
 `docker-compose run airflow airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin`
+<br>
 ![user](./images/dockerRuncreateuser.png "make user")
 - 7. Access Airflow UI
 Go to: http://localhost:8080
@@ -67,7 +69,8 @@ Enable and trigger pyspark_etl_dag in Airflow UI.
 #### Airflow DAG Overview
 <br>Task 1: Run PySpark ETL (spark-submit inside container).
 The partition files are set to be placed in s3 buckets in processed/fashion_store folder:
-![s3buckets](./images/awsS3BucketsOutput.png "output")
+<br>
+![s3buckets](./images/awsS3Processed.png "output")
 <br>Task 2: Validate output using validate.py.
 
 
