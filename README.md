@@ -34,12 +34,12 @@ cd pyspark-airflow-etl
 - 2. Place Your Data
 Download the Kaggle dataset and put CSV files in data/ or upload to S3.
 AWS S3 buckets contains the csv files:
-![S3Buckets](\images\awsS3BucketsCSV.png "S3")
+![S3Buckets](./images/awsS3BucketsCSV.png "S3")
 
 - 3. Build Your Custom Image: files: Dockerfile, docker-compose.yml
 <br>`docker build -t airflow-spark-etl .`
 <br>`docker-compose build`
-
+![docker build](./images/dockerbuild.png "docker build")
 Generate a Fernet Key: Airflow requires a Fernet key for encrypting sensitive data. Generate one using Python:
 
 	from cryptography.fernet import Fernet
@@ -49,20 +49,20 @@ Generate a Fernet Key: Airflow requires a Fernet key for encrypting sensitive da
 - 4. Initialize the Database: Run the following command to initialize the Airflow database:
 
 `docker-compose run airflow airflow db init`
-
+![docker run](./images/dockerRun.png "docker Run")
 - 5. Start Services
 `docker-compose up -d`
 
 - 6. Add admin user for login into Airflow UI
 `docker-compose run airflow airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin`
-
+![user](./images/dockerRuncreateuser.png "make user")
 - 7. Access Airflow UI
 Go to: http://localhost:8080
 Default credentials: admin / admin
 
 - 8. Trigger DAG
 Enable and trigger pyspark_etl_dag in Airflow UI.
-
+![airflow1](./images/airflow1.png "airflow1")
 
 #### Airflow DAG Overview
 <br>Task 1: Run PySpark ETL (spark-submit inside container).
