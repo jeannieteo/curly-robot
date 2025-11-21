@@ -5,7 +5,7 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName("DataValidation").getOrCreate()
 
 # Path to processed data (adjust to your S3 or local path)
-OUTPUT_PATH = "s3a://your-bucket/processed/fashion_store/"
+OUTPUT_PATH = "s3a://bucketjtproject/EcommerceEuropeanFashion/processed/fashion_store/"
 
 # Load processed data
 df = spark.read.parquet(OUTPUT_PATH)
