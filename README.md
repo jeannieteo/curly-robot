@@ -36,33 +36,34 @@ Download the Kaggle dataset and put CSV files in data/ or upload to S3.
 AWS S3 buckets contains the csv files: (You have to create your own s3 in AWS.)
 ![S3Buckets](./images/awsS3BucketsCSV.png "S3")
 
-- 3. Build Your Custom Image: files: Dockerfile, docker-compose.yml
+- 3. Generate a Fernet Key: Airflow requires a Fernet key for encrypting sensitive data.
+     <br>Generate one using Python:
+<br>`from cryptography.fernet import Fernet`
+<br>`print(Fernet.generate_key().decode())`
+	<br>Replace YOUR_FERNET_KEY in the docker-compose.yml file with the generated key.
+
+- 4. Build Your Custom Image: files: Dockerfile, docker-compose.yml
 <br>`docker build -t airflow-spark-etl .`
 <br>`docker-compose build`
 ![docker build](./images/dockerbuild.png "docker build")
-Generate a Fernet Key: Airflow requires a Fernet key for encrypting sensitive data. Generate one using Python:
 
-	from cryptography.fernet import Fernet
-	print(Fernet.generate_key().decode())
-	Replace YOUR_FERNET_KEY in the docker-compose.yml file with the generated key.
-
-- 4. Initialize the Database: Run the following command to initialize the Airflow database:
+- 5. Initialize the Database: Run the following command to initialize the Airflow database:
 
 `docker-compose run airflow airflow db init`
 <br>
 ![docker run](./images/dockerRun.png "docker Run")
-- 5. Start Services
+
+- 6. Start Services
 `docker-compose up -d`
 
-- 6. Add admin user for login into Airflow UI
+- 7. Add admin user for login into Airflow UI
 `docker-compose run airflow airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin`
-<br>
-![user](./images/dockerRuncreateuser.png "make user")
-- 7. Access Airflow UI
+
+- 8. Access Airflow UI
 Go to: http://localhost:8080
 Default credentials: admin / admin
 
-- 8. Trigger DAG
+- 9. Trigger DAG
 Enable and trigger pyspark_etl_dag in Airflow UI.
 ![airflow1](./images/airflow1.png "airflow1")
 
@@ -72,7 +73,7 @@ The partition files are set to be placed in s3 buckets in processed/fashion_stor
 <br>
 ![s3buckets](./images/awsS3Processed.png "output")
 <br>Task 2: Validate output using validate.py.
-
+![airflow2](./images/airflow2.png "airflow2")
 
 #### Environment Variables
 <br>Set AWS credentials in .env or Docker Compose:
