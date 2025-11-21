@@ -31,7 +31,7 @@ salesitems_df = salesitems_df.withColumn("quantity", col("quantity").cast("int")
 # Step 3: Join tables
 sales_full_df = salesitems_df.join(sales_df, on="sale_id", how="inner")
 sales_products_df = sales_full_df.join(products_df, on="product_id", how="inner")
-full_df = sales_products_df.join(customers_df, on="customer_id", how="inner")
+full_df = sales_products_df.join(customers_df, on="customer_id", how="inner").drop(customers_df['country'])
 
 # Step 4: Transformations
 # Calculate revenue per category and country
@@ -46,5 +46,6 @@ agg_df.write \
     .mode("overwrite") \
     .partitionBy("country") \
     .parquet(OUTPUT_PATH)
+
 
 print("ETL pipeline completed successfully!")
