@@ -40,10 +40,17 @@ spark_task = BashOperator(
 # Step 2: Validate output
 validate_task = BashOperator(
     task_id='validate_output',
-    bash_command='python /opt/airflow/dags/scripts/validate.py',
-    dag=dag,
+    bash_command="""
+	spark-submit \
+	--master local[*] \
+	--packages org.apache.hadoop:hadoop-aws:3.3.4 \
+  	--conf spark.hadoop.fs.s3a.access.key=$AWS_ACCESS_KEY_ID \
+  	--conf spark.hadoop.fs.s3a.secret.key=$AWS_SECRET_ACCESS_KEY \
+  	--conf spark.hadoop.fs.s3a.endpoint=s3.ap-southeast-2.amazonaws.com \
+  	/opt/airflow/dags/scripts/validate.py
+   """,
+   dag=dag,
 )
-
 
 # Task dependencies
 spark_task >> validate_task
